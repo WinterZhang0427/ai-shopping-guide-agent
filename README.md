@@ -254,18 +254,6 @@ Demo 内为 **Mock 数据**（按 Query hash 确定性生成），用于展示�
 
 ---
 
-## 为什么适合淘天 AI 大模型产品经理岗位
-
-- **场景对齐**：搜索升级、智能导购、转化与 GMV，对应淘天核心业务
-- **能力映射清晰**：NLU、RAG、Ranking、Generation、Multi-turn、Prompt、Evaluation 均有产品化落点
-- **不是纯 Demo**：包含埋点、AB、业务规则（profit_score）、风险边界说明
-- **可现场体验**：本地运行，面试官可实际操作 Parse Intent → Generate Recommendation
-- **角色定位准确**：侧重意图设计、解释性、实验度量，而非只展示模型调用
-
-更完整的投递说明见 [`portfolio_note.md`](portfolio_note.md)，面试口述见 [`interview_pitch.md`](interview_pitch.md)。
-
----
-
 ## 后续迭代方向
 
 | 阶段 | 方向 |
