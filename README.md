@@ -8,6 +8,8 @@
 
 **本地可运行 · 无需 API Key · 面向 AI 产品经理作品集**
 
+📹 **演示视频**：[v1.0 Demo Video](https://github.com/WinterZhang0427/ai-shopping-guide-agent/releases/tag/v1.0)（Parse Intent → Top 3 推荐 → Score Breakdown → Mock AB）
+
 ---
 
 ## 一句话介绍
@@ -21,6 +23,8 @@
 电商搜索长期依赖关键词匹配。当用户表达复合需求时——例如「适合留学生写代码的轻薄本，预算 6000 左右，续航好」——往往需要多次改写 Query，决策成本高、转化路径长。
 
 本项目回答的问题是：**大模型能力如何产品化为导购 Agent**，而不是做一个只能聊天的 Chatbot。Demo 覆盖从用户输入到推荐输出、再到实验度量的完整产品闭环，便于面试官本地体验。
+
+![产品思考：用户痛点、业务目标、AI 方案与核心指标](docs/主页1.png)
 
 ---
 
@@ -104,6 +108,8 @@
 
 ## 如何运行
 
+> 也可先观看 [演示视频 v1.0](https://github.com/WinterZhang0427/ai-shopping-guide-agent/releases/tag/v1.0)，了解完整操作流程后再本地运行。
+
 ```bash
 pip install -r requirements.txt
 streamlit run app.py
@@ -126,6 +132,8 @@ py -3 -m streamlit run app.py
 4. 点击 **Generate Recommendation · 生成推荐**
 
 > 若直接点击生成推荐，系统会先自动解析自然语言。请保持终端窗口运行，关闭后页面将无法访问。
+
+![输入界面：自然语言 Query · Parse Intent · Manual Constraints](docs/空置界面.png)
 
 ---
 
@@ -172,19 +180,9 @@ py -3 -m streamlit run app.py
 
 **预期**：budget_min=8000 · budget_max=10000 · parsed_budget=10000
 
----
+![需求输入与 Intent 解析：预算区间 · 置信度 · rule_hit_reason](docs/需求输入与解析.png)
 
-## Demo 截图占位
-
-> 建议在 `docs/screenshots/` 目录补充以下截图，并替换下方占位链接。
-
-| 模块 | 占位说明 |
-|------|---------|
-| 首页输入 | `![首页](docs/screenshots/01-home.png)` |
-| 意图解析 | `![意图解析](docs/screenshots/02-intent.png)` |
-| Top 3 推荐 | `![推荐结果](docs/screenshots/03-top3.png)` |
-| Score Breakdown | `![分数拆解](docs/screenshots/04-breakdown.png)` |
-| AB 实验 | `![AB实验](docs/screenshots/05-abtest.png)` |
+![用户需求理解：结构化槽位 · Active Constraints · RAG 召回条件](docs/用户语言识别.png)
 
 ---
 
@@ -196,11 +194,15 @@ py -3 -m streamlit run app.py
 4. **Prompt 可视化**：让面试官看到 Agent 的输入约束，而非黑盒对话
 5. **PM 视角闭环**：意图 → 召回 → 排序 → 解释 → 追问 → 埋点 → AB
 
+![Top 3 可解释推荐：推荐理由 · 潜在风险 · 适合人群](docs/TOP3推荐.png)
+
 ---
 
 ## 推荐排序逻辑
 
 **流程**：品类过滤 → 预算上限过滤（`price ≤ budget_max`）→ 7 维打分 → 加权求和 → Top 3
+
+![RAG 候选召回：7 SKU 候选池与 Top 1 初筛](docs/RAGrecall.png)
 
 **维度与默认权重**
 
@@ -222,6 +224,16 @@ final_score = 0.15×category + 0.20×budget + 0.15×rating
 ```
 
 权重可在 AB 实验中调整，用于验证「体验优先」与「GMV 优先」等策略差异。
+
+![商品对比表与 7 维 Score Breakdown（含 profit_score）](docs/多目标排序.png)
+
+**Top 1 / 2 / 3 分数明细**
+
+![Top 1 · Apple MacBook Air M3 · final_score = 74.3](docs/ABtest1.png)
+
+![Top 2 · 联想 ThinkBook 14+ 2024 · final_score = 69.9](docs/ABtest2.png)
+
+![Top 3 · 惠普 战66 七代 · final_score = 66.4](docs/ABtest3.png)
 
 ---
 
