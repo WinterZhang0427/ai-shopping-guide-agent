@@ -18,6 +18,16 @@
 
 ---
 
+## Online Interactive Demo / 在线交互 Demo
+
+[Click here to try the interactive demo](https://ai-shopping-guide-agentzzh.streamlit.app/)
+
+Users can interact with the demo by entering a natural language shopping query, parsing intent, and generating product recommendations.
+
+用户可以直接在网页中输入自然语言购物需求，体验意图解析、商品召回、Top 3 推荐、多目标排序和 Mock AB Test 指标展示。
+
+---
+
 ## 项目背景
 
 电商搜索长期依赖关键词匹配。当用户表达复合需求时——例如「适合留学生写代码的轻薄本，预算 6000 左右，续航好」——往往需要多次改写 Query，决策成本高、转化路径长。
@@ -99,9 +109,10 @@
 ├── prompt_design.py       # Prompt 设计展示
 ├── analytics.py           # 埋点 · Mock AB
 ├── products.csv           # 24 SKU（laptop / phone / headphone / skincare）
+├── docs/                  # README 演示截图
 ├── portfolio_note.md      # 作品集说明（HR / 业务向）
 ├── interview_pitch.md     # 面试口述稿 · 问答
-└── requirements.txt
+└── requirements.txt       # Streamlit Cloud 依赖
 ```
 
 ---
@@ -134,6 +145,36 @@ py -3 -m streamlit run app.py
 > 若直接点击生成推荐，系统会先自动解析自然语言。请保持终端窗口运行，关闭后页面将无法访问。
 
 ![输入界面：自然语言 Query · Parse Intent · Manual Constraints](docs/空置界面.png)
+
+---
+
+## Deployment Guide / 部署说明
+
+将本仓库部署到 **Streamlit Community Cloud**，生成老师要求的公网可交互页面。
+
+| 配置项 | 值 |
+|--------|-----|
+| **Platform** | [Streamlit Community Cloud](https://share.streamlit.io/) |
+| **Repository** | https://github.com/WinterZhang0427/ai-shopping-guide-agent |
+| **Branch** | `main` |
+| **Main file path** | `app.py` |
+| **Python dependencies** | `requirements.txt` |
+
+**部署步骤**
+
+1. 登录 [share.streamlit.io](https://share.streamlit.io/)，用 GitHub 授权。
+2. 点击 **Create app** → **Deploy a public app from GitHub**。
+3. 选择仓库 `WinterZhang0427/ai-shopping-guide-agent`，分支 `main`，主文件 `app.py`。
+4. 确认 **Advanced settings** 中依赖文件为 `requirements.txt`（无需额外 Secret；Demo 默认 Mock，不依赖 `LLM_API_KEY`）。
+5. 点击 **Deploy**，等待构建完成，复制 `https://*.streamlit.app` 链接。
+6. 将链接填入上文 [Online Interactive Demo](#online-interactive-demo--在线交互-demo) 一节，并提交 README 更新。
+
+**云端就绪检查（已通过）**
+
+- 入口为根目录 `app.py`，符合 Community Cloud 约定。
+- `products.csv` 通过 `Path(__file__).parent / "products.csv"` 相对路径加载（见 `recommender.py`）。
+- 无 Windows 绝对路径；未使用需额外安装的 `plotly` / `altair` / `matplotlib` 等库。
+- `requirements.txt` 仅包含实际第三方依赖：`streamlit`、`pandas`。
 
 ---
 
